@@ -7,7 +7,7 @@ server:
       min-spare: 10
   port: 8080
   servlet:
-    context-path: /ruiz/admin
+    context-path: /
 spring:
   # 环境 dev|test|prod
   profiles:
