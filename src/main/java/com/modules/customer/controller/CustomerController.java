@@ -1,5 +1,6 @@
 package com.modules.customer.controller;
 
+import com.common.R;
 import com.modules.customer.entity.CustomerEntity;
 import com.modules.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("list")
-    public List<CustomerEntity> queryList() {
-        return customerService.queryList();
+    public R queryList() {
+        return R.ok(customerService.queryList());
     }
 }

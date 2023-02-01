@@ -1,5 +1,6 @@
 package com.modules.task;
 
+import com.common.R;
 import com.modules.scheduler.CustomerTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,8 @@ public class TaskController {
     }
 
     @GetMapping("customer-task")
-    public void customerTask() {
+    public R customerTask() {
         customerTask.run(new HashMap<>(0));
+        return R.ok();
     }
 }

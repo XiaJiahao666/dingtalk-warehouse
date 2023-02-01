@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +42,16 @@ public class CustomerTask {
         String customerFormUuid = this.formConfig.getJSONObject("customer").getString("formUuid");
         // 查询客户表单数据
         JSONObject searchFieldJsonObject = new JSONObject();
-        List<JSONObject> dataList = this.getFormDataList(customerFormUuid, searchFieldJsonObject.toJSONString());
-        if (dataList == null) {
+        List<JSONObject> resultList = this.getFormDataList(customerFormUuid, searchFieldJsonObject.toJSONString());
+        if (resultList == null) {
             return;
         }
+        List<JSONObject> dataList = new ArrayList<>();
+        resultList.forEach(result -> {
+            dataList.add(result.getJSONObject("formData"));
+        });
+        // 处理数据
+        this.handleData(dataList);
     }
 
     /**
@@ -101,5 +108,12 @@ public class CustomerTask {
         } catch (Exception e) {
             return getFormDataList(formUuid, searchFieldJson);
         }
+    }
+
+    /**
+     * 处理数据
+     */
+    public void handleData(List<JSONObject> dataList) {
+
     }
 }
