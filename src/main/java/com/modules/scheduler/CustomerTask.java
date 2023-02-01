@@ -2,14 +2,11 @@ package com.modules.scheduler;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.client.DingTalkClient;
 import com.client.DingTalkYiDaClient;
 import com.config.DingTalkConfig;
 import com.config.DingTalkYiDaConfig;
 import com.config.YiDaConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
