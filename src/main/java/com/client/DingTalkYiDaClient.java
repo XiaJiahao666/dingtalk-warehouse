@@ -98,6 +98,133 @@ public class DingTalkYiDaClient extends DingTalkClient {
     }
 
     /**
+     * 获取流程详情
+     *
+     * @param processInstanceId 流程实例id
+     * @param userId            用户id
+     * @return responseBody
+     */
+    public String getProcess(String processInstanceId, String userId) {
+        String url = DingTalkYiDaConstant.GET_PROCESS + "/%s?appType=%s&systemToken=%s&userId=%s";
+        url = String.format(url, processInstanceId, yiDaConfig.getAppType(), yiDaConfig.getSystemToken(), userId);
+        return this.request(url, Method.GET, null);
+    }
+
+    /**
+     * 获取流程设计的节点信息
+     *
+     * @param processCode 流程编码
+     * @param userId      用户id
+     * @return responseBody
+     */
+    public String getProcessActivities(String processCode, String userId) {
+        String url = DingTalkYiDaConstant.GET_PROCESS_ACTIVITIES + "?processCode=%s&appType=%s&systemToken=%s&userId=%s";
+        url = String.format(url, processCode, yiDaConfig.getAppType(), yiDaConfig.getSystemToken(), userId);
+        return this.request(url, Method.GET, null);
+    }
+
+    /**
+     * 获取流程运行任务
+     *
+     * @param processInstanceId 流程实例id
+     * @param userId            用户id
+     * @return responseBody
+     */
+    public String getProcessRunningTask(String processInstanceId, String userId) {
+        String url = DingTalkYiDaConstant.GET_PROCESS_RUNNING_TASK + "?processInstanceId=%s&appType=%s&systemToken=%s&userId=%s";
+        url = String.format(url, processInstanceId, yiDaConfig.getAppType(), yiDaConfig.getSystemToken(), userId);
+        return this.request(url, Method.GET, null);
+    }
+
+    /**
+     * 发起流程
+     *
+     * @param formUuid     表单id
+     * @param processCode  流程id
+     * @param formDataJson 表单数据
+     * @param userId       用户id
+     * @return responseBody
+     */
+    public String createProcess(String formUuid, String processCode, String formDataJson, String userId) {
+        JSONObject bodyObj = new JSONObject();
+        bodyObj.put("appType", yiDaConfig.getAppType());
+        bodyObj.put("systemToken", yiDaConfig.getSystemToken());
+        bodyObj.put("userId", userId);
+        bodyObj.put("formUuid", formUuid);
+        bodyObj.put("processCode", processCode);
+        bodyObj.put("formDataJson", formDataJson);
+        return this.request(DingTalkYiDaConstant.CREATE_PROCESS, Method.POST, bodyObj.toJSONString());
+    }
+
+    /**
+     * 更新流程表单数据
+     *
+     * @param processInstanceId 流程实例id
+     * @param formDataJson      表单数据
+     * @param userId            用户id
+     * @return responseBody
+     */
+    public String updateProcess(String processInstanceId, String formDataJson, String userId) {
+        JSONObject bodyObj = new JSONObject();
+        bodyObj.put("appType", yiDaConfig.getAppType());
+        bodyObj.put("systemToken", yiDaConfig.getSystemToken());
+        bodyObj.put("userId", userId);
+        bodyObj.put("processInstanceId", processInstanceId);
+        bodyObj.put("updateFormDataJson", formDataJson);
+        return this.request(DingTalkYiDaConstant.UPDATE_PROCESS, Method.PUT, bodyObj.toJSONString());
+    }
+
+    /**
+     * 执行审批任务
+     *
+     * @param processInstanceId 流程实例id
+     * @param taskId            任务id
+     * @param outResult         审批结果 AGREE(同意)、DISAGREE(不同意)
+     * @param remark            审批意见
+     * @param formDataJson      更新的表单值
+     * @param userId            用户的userid
+     * @return responseBody
+     */
+    public String executeTask(String processInstanceId, String taskId, String outResult, String remark, String formDataJson, String userId) {
+        JSONObject bodyObj = new JSONObject();
+        bodyObj.put("appType", yiDaConfig.getAppType());
+        bodyObj.put("systemToken", yiDaConfig.getSystemToken());
+        bodyObj.put("userId", userId);
+        bodyObj.put("processInstanceId", processInstanceId);
+        bodyObj.put("taskId", taskId);
+        bodyObj.put("outResult", outResult);
+        bodyObj.put("remark", remark);
+        bodyObj.put("formDataJson", formDataJson);
+        return this.request(DingTalkYiDaConstant.EXECUTE_TASK, Method.POST, bodyObj.toJSONString());
+    }
+
+    /**
+     * 删除流程数据
+     *
+     * @param processInstanceId 流程实例id
+     * @param userId            用户id
+     * @return responseBody
+     */
+    public String deleteProcess(String processInstanceId, String userId) {
+        String url = DingTalkYiDaConstant.DELETE_PROCESS + "?processInstanceId=%s&appType=%s&systemToken=%s&userId=%s";
+        url = String.format(url, processInstanceId, yiDaConfig.getAppType(), yiDaConfig.getSystemToken(), userId);
+        return this.request(url, Method.DELETE, null);
+    }
+
+    /**
+     * 终止流程
+     *
+     * @param processInstanceId 流程实例id
+     * @param userId            用户id
+     * @return responseBody
+     */
+    public String terminateProcess(String processInstanceId, String userId) {
+        String url = DingTalkYiDaConstant.TERMINATE_PROCESS + "?processInstanceId=%s&appType=%s&systemToken=%s&userId=%s";
+        url = String.format(url, processInstanceId, yiDaConfig.getAppType(), yiDaConfig.getSystemToken(), userId);
+        return this.request(url, Method.PUT, null);
+    }
+
+    /**
      * 获取临时免登附件地址
      *
      * @param userId  用户id
