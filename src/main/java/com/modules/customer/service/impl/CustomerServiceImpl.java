@@ -1,5 +1,6 @@
 package com.modules.customer.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.modules.customer.dao.CustomerDao;
 import com.modules.customer.entity.CustomerEntity;
 import com.modules.customer.service.CustomerService;
@@ -15,7 +16,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao;
 
     @Override
-    public List<CustomerEntity> queryList() {
-        return customerDao.queryList();
+    public List<CustomerEntity> selectList() {
+        return customerDao.selectList(new QueryWrapper<>());
     }
 }

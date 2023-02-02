@@ -19,6 +19,6 @@ public class CustomerController {
 
     @GetMapping("list")
     public R queryList() {
-        return R.ok(customerService.queryList());
+        return R.ok(customerService.selectList());
     }
 }
