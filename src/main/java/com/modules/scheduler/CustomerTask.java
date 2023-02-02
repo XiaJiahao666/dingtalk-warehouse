@@ -45,7 +45,7 @@ public class CustomerTask {
     private CustomerTicketService CustomerTicketService;
 
 
-    @Scheduled(cron = "0 25 12 * * ?")
+    @Scheduled(cron = "0 0 1 * * ?")
     public void run() {
         log.info("客户更新任务start");
         this.run(new HashMap<>(0));
