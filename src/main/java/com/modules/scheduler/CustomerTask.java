@@ -6,7 +6,10 @@ import com.client.DingTalkYiDaClient;
 import com.config.DingTalkConfig;
 import com.config.DingTalkYiDaConfig;
 import com.config.YiDaConfig;
+import com.modules.customer.entity.CustomerEntity;
+import com.modules.customer.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +30,9 @@ public class CustomerTask {
     private String managerUserId;
 
     private DingTalkYiDaClient yiDaClient;
+
+    @Autowired
+    private CustomerService customerService;
 
 
     @Scheduled(cron = "0 25 12 * * ?")
@@ -114,6 +120,20 @@ public class CustomerTask {
      * 处理数据
      */
     public void handleData(List<JSONObject> dataList) {
-
+        // 先删除所有数据
+        customerService.deleteAll();
+        // 后新增
+        dataList.forEach(data -> {
+            // 处理主表的客户信息
+            CustomerEntity customer = new CustomerEntity();
+            customer.setNumber(data.getString("textField_kxjohve2"));
+            customer.setName(data.getString("textField_kxjohve3"));
+            customer.setGrade(data.getString("radioField_kxjohve4_id"));
+            customer.setAddress(data.getString("addressField_kxjohve6_id"));
+            customerService.insert(customer);
+            // 处理联系人信息
+            JSONArray concatArray = data.getJSONArray("tableField_kxjp76k0");
+            System.out.println(concatArray);
+        });
     }
 }
