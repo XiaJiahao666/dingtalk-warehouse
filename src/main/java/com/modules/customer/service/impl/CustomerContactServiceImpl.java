@@ -8,11 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class CustomerContactServiceImpl implements CustomerContactService {
 
     @Autowired
     private CustomerContactDao customerContactDao;
+
+    @Override
+    public List<CustomerContactEntity> queryListByCustomerId(Long customerId) {
+        QueryWrapper<CustomerContactEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("customer_id", customerId);
+        return customerContactDao.selectList(wrapper);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

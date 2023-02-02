@@ -8,11 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class CustomerTicketServiceImpl implements CustomerTicketService {
 
     @Autowired
     private CustomerTicketDao customerTicketDao;
+
+    @Override
+    public List<CustomerTicketEntity> queryListByCustomerId(Long customerId) {
+        QueryWrapper<CustomerTicketEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("customer_id", customerId);
+        return customerTicketDao.selectList(wrapper);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
