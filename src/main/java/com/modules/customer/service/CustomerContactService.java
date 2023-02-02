@@ -10,4 +10,9 @@ public interface CustomerContactService {
      * 新增
      */
     void insert(CustomerContactEntity customerContact);
+
+    /**
+     * 删除所有数据
+     */
+    void deleteAll();
 }

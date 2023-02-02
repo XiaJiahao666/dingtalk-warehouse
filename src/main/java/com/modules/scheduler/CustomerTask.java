@@ -127,6 +127,8 @@ public class CustomerTask {
     public void handleData(List<JSONObject> dataList) {
         // 先删除所有数据
         customerService.deleteAll();
+        customerContactService.deleteAll();
+
         // 后新增
         dataList.forEach(data -> {
             // 处理主表的客户信息
