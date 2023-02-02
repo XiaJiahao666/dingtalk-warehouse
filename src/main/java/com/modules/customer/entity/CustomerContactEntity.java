@@ -6,31 +6,26 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("rz_customer")
-public class CustomerEntity {
+@TableName("rz_customer_contact")
+public class CustomerContactEntity {
 
     @TableId
     private Long id;
 
     /**
-     * 客户名称
+     * 客户id
      */
-    private String number;
+    private Long customerId;
 
     /**
-     * 客户名称
+     * 联系人
      */
-    private String name;
+    private String contactName;
 
     /**
-     * 客户名称
+     * 联系方式
      */
-    private String grade;
-
-    /**
-     * 客户名称
-     */
-    private String address;
+    private String contactMobile;
 
     /**
      * 逻辑删除标志 1.删除

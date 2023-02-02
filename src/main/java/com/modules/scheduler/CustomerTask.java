@@ -6,7 +6,9 @@ import com.client.DingTalkYiDaClient;
 import com.config.DingTalkConfig;
 import com.config.DingTalkYiDaConfig;
 import com.config.YiDaConfig;
+import com.modules.customer.entity.CustomerContactEntity;
 import com.modules.customer.entity.CustomerEntity;
+import com.modules.customer.service.CustomerContactService;
 import com.modules.customer.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,9 @@ public class CustomerTask {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private CustomerContactService customerContactService;
 
 
     @Scheduled(cron = "0 25 12 * * ?")
@@ -132,8 +137,14 @@ public class CustomerTask {
             customer.setAddress(data.getString("addressField_kxjohve6_id"));
             customerService.insert(customer);
             // 处理联系人信息
-            JSONArray concatArray = data.getJSONArray("tableField_kxjp76k0");
-            System.out.println(concatArray);
+            JSONArray contactArray = data.getJSONArray("tableField_kxjp76k0");
+            contactArray.toJavaList(JSONObject.class).forEach(contact -> {
+                CustomerContactEntity customerContact = new CustomerContactEntity();
+                customerContact.setCustomerId(customer.getId());
+                customerContact.setContactName(contact.getString("textField_kxjohve5"));
+                customerContact.setContactMobile(contact.getString("textField_kxjohve9"));
+                customerContactService.insert(customerContact);
+            });
         });
     }
 }
