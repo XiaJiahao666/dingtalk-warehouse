@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("rz_address")
+@TableName("rz_customer")
 public class CustomerEntity {
 
     @TableId
@@ -14,5 +14,21 @@ public class CustomerEntity {
     /**
      * 客户名称
      */
+    private String numbe;
+
+    /**
+     * 客户名称
+     */
     private String name;
+
+    /**
+     * 客户名称
+     */
+    private String rank;
+
+    /**
+     * 客户名称
+     */
+    private String address;
+
 }

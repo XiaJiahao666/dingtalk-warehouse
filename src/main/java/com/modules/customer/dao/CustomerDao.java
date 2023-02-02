@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 public interface CustomerDao extends BaseMapper<CustomerEntity> {
 
-    @Select("select * from rz_customer")
     List<CustomerEntity> queryList();
+
 }
