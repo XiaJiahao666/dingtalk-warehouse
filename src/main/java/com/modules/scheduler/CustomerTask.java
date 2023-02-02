@@ -8,8 +8,10 @@ import com.config.DingTalkYiDaConfig;
 import com.config.YiDaConfig;
 import com.modules.customer.entity.CustomerContactEntity;
 import com.modules.customer.entity.CustomerEntity;
+import com.modules.customer.entity.CustomerTicketEntity;
 import com.modules.customer.service.CustomerContactService;
 import com.modules.customer.service.CustomerService;
+import com.modules.customer.service.CustomerTicketService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -38,6 +40,9 @@ public class CustomerTask {
 
     @Autowired
     private CustomerContactService customerContactService;
+
+    @Autowired
+    private CustomerTicketService CustomerTicketService;
 
 
     @Scheduled(cron = "0 25 12 * * ?")
@@ -128,6 +133,7 @@ public class CustomerTask {
         // 先删除所有数据
         customerService.deleteAll();
         customerContactService.deleteAll();
+        CustomerTicketService.deleteAll();
 
         // 后新增
         dataList.forEach(data -> {
@@ -146,6 +152,19 @@ public class CustomerTask {
                 customerContact.setContactName(contact.getString("textField_kxjohve5"));
                 customerContact.setContactMobile(contact.getString("textField_kxjohve9"));
                 customerContactService.insert(customerContact);
+            });
+            // 处理开票信息
+            JSONArray tickerArray = data.getJSONArray("tableField_kxjohve8");
+            tickerArray.toJavaList(JSONObject.class).forEach(ticket -> {
+                CustomerTicketEntity customerTicket = new CustomerTicketEntity();
+                customerTicket.setCustomerId(customer.getId());
+                customerTicket.setName(ticket.getString("textField_kxjohvea"));
+                customerTicket.setNumber(ticket.getString("textField_kxjohveb"));
+                customerTicket.setAddress(ticket.getString("textField_kxjohved"));
+                customerTicket.setMobile(ticket.getString("numberField_kxjohvee_value"));
+                customerTicket.setBankAccount(ticket.getString("textField_kxjohveg"));
+                customerTicket.setBank(ticket.getString("textField_kxjohveh"));
+                CustomerTicketService.insert(customerTicket);
             });
         });
     }

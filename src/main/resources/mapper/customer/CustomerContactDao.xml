@@ -10,5 +10,4 @@
         <result property="contactMobile" column="contact_mobile"/>
     </resultMap>
 
-
 </mapper>

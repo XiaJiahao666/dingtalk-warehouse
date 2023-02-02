@@ -10,10 +10,5 @@
         <result property="grade" column="grade"/>
         <result property="address" column="address"/>
     </resultMap>
-    <select id="queryList" resultType="com.modules.customer.entity.CustomerEntity">
-        SELECT id, number, `name`, grade, address
-        FROM rz_customer
-    </select>
-
 
 </mapper>
