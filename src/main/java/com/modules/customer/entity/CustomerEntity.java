@@ -14,7 +14,7 @@ public class CustomerEntity {
     /**
      * 客户名称
      */
-    private String numbe;
+    private String number;
 
     /**
      * 客户名称
@@ -24,7 +24,7 @@ public class CustomerEntity {
     /**
      * 客户名称
      */
-    private String rank;
+    private String grade;
 
     /**
      * 客户名称

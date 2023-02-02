@@ -5,13 +5,13 @@
 
     <resultMap type="com.modules.customer.entity.CustomerEntity" id="customerMap">
         <result property="id" column="id"/>
-        <result property="numbe" column="numbe"/>
+        <result property="number" column="number"/>
         <result property="name" column="name"/>
-        <result property="rank" column="rank"/>
+        <result property="grade" column="grade"/>
         <result property="address" column="address"/>
     </resultMap>
     <select id="queryList" resultType="com.modules.customer.entity.CustomerEntity">
-        SELECT id, numbe, `name`, rank, address
+        SELECT id, number, `name`, grade, address
         FROM rz_customer
     </select>
 
