@@ -1,7 +1,7 @@
-package com.modules.customer.dao;
+package com.modules.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.modules.customer.entity.CustomerContactEntity;
+import com.modules.entity.CustomerContactEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,6 +1,6 @@
-package com.modules.customer.service;
+package com.modules.service;
 
-import com.modules.customer.entity.CustomerTicketEntity;
+import com.modules.entity.CustomerTicketEntity;
 
 import java.util.List;
 

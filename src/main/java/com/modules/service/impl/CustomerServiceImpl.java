@@ -1,13 +1,13 @@
-package com.modules.customer.service.impl;
+package com.modules.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.modules.customer.dao.CustomerDao;
-import com.modules.customer.entity.CustomerContactEntity;
-import com.modules.customer.entity.CustomerEntity;
-import com.modules.customer.entity.CustomerTicketEntity;
-import com.modules.customer.service.CustomerContactService;
-import com.modules.customer.service.CustomerService;
-import com.modules.customer.service.CustomerTicketService;
+import com.modules.dao.CustomerDao;
+import com.modules.entity.CustomerContactEntity;
+import com.modules.entity.CustomerEntity;
+import com.modules.entity.CustomerTicketEntity;
+import com.modules.service.CustomerContactService;
+import com.modules.service.CustomerService;
+import com.modules.service.CustomerTicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

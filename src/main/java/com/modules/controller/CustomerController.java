@@ -1,7 +1,7 @@
-package com.modules.customer.controller;
+package com.modules.controller;
 
 import com.common.R;
-import com.modules.customer.service.CustomerService;
+import com.modules.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

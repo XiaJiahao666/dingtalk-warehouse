@@ -1,7 +1,7 @@
-package com.modules.customer.dao;
+package com.modules.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.modules.customer.entity.CustomerTicketEntity;
+import com.modules.entity.CustomerTicketEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
