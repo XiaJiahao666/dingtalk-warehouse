@@ -16,7 +16,7 @@ public class CustomerEntity {
     private Long id;
 
     /**
-     * 客户名称
+     * 编号
      */
     private String number;
 
@@ -26,12 +26,12 @@ public class CustomerEntity {
     private String name;
 
     /**
-     * 客户名称
+     * 等级
      */
     private String grade;
 
     /**
-     * 客户名称
+     * 地址
      */
     private String address;
 
