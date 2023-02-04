@@ -9,9 +9,11 @@ import com.config.YiDaConfig;
 import com.modules.entity.CustomerContactEntity;
 import com.modules.entity.CustomerEntity;
 import com.modules.entity.CustomerTicketEntity;
+import com.modules.entity.WarehouseEntity;
 import com.modules.service.CustomerContactService;
 import com.modules.service.CustomerService;
 import com.modules.service.CustomerTicketService;
+import com.modules.service.WarehouseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 @Component
 @Slf4j
-public class CustomerTask {
+public class WarehouseTask {
 
     private YiDaConfig yiDaConfig;
 
@@ -36,29 +38,23 @@ public class CustomerTask {
     private DingTalkYiDaClient yiDaClient;
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    private CustomerContactService customerContactService;
-
-    @Autowired
-    private CustomerTicketService CustomerTicketService;
+    private WarehouseService warehouseService;
 
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void run() {
-        log.info("客户同步任务start");
+        log.info("库存同步任务start");
         this.run(new HashMap<>(0));
-        log.info("客户同步任务end");
+        log.info("库存同步任务end");
     }
 
     public void run(Map<String, Object> params) {
         // 初始化
         this.load();
-        String customerFormUuid = this.formConfig.getJSONObject("customer").getString("formUuid");
+        String warehouseFormUuid = this.formConfig.getJSONObject("warehouse").getString("formUuid");
         // 查询客户表单数据
         JSONObject searchFieldJsonObject = new JSONObject();
-        List<JSONObject> resultList = this.getFormDataList(customerFormUuid, searchFieldJsonObject.toJSONString());
+        List<JSONObject> resultList = this.getFormDataList(warehouseFormUuid, searchFieldJsonObject.toJSONString());
         if (resultList == null) {
             return;
         }
@@ -131,41 +127,20 @@ public class CustomerTask {
      */
     public void handleData(List<JSONObject> dataList) {
         // 先删除所有数据
-        customerService.deleteAll();
-        customerContactService.deleteAll();
-        CustomerTicketService.deleteAll();
+        warehouseService.deleteAll();
 
         // 后新增
         dataList.forEach(data -> {
-            // 处理主表的客户信息
-            CustomerEntity customer = new CustomerEntity();
-            customer.setNumber(data.getString("textField_kxjohve2"));
-            customer.setName(data.getString("textField_kxjohve3"));
-            customer.setGrade(data.getString("radioField_kxjohve4_id"));
-            customer.setAddress(data.getString("addressField_kxjohve6_id"));
-            customerService.insert(customer);
-            // 处理联系人信息
-            JSONArray contactArray = data.getJSONArray("tableField_kxjp76k0");
-            contactArray.toJavaList(JSONObject.class).forEach(contact -> {
-                CustomerContactEntity customerContact = new CustomerContactEntity();
-                customerContact.setCustomerId(customer.getId());
-                customerContact.setContactName(contact.getString("textField_kxjohve5"));
-                customerContact.setContactMobile(contact.getString("textField_kxjohve9"));
-                customerContactService.insert(customerContact);
-            });
-            // 处理开票信息
-            JSONArray tickerArray = data.getJSONArray("tableField_kxjohve8");
-            tickerArray.toJavaList(JSONObject.class).forEach(ticket -> {
-                CustomerTicketEntity customerTicket = new CustomerTicketEntity();
-                customerTicket.setCustomerId(customer.getId());
-                customerTicket.setName(ticket.getString("textField_kxjohvea"));
-                customerTicket.setNumber(ticket.getString("textField_kxjohveb"));
-                customerTicket.setAddress(ticket.getString("textField_kxjohved"));
-                customerTicket.setMobile(ticket.getString("numberField_kxjohvee_value"));
-                customerTicket.setBankAccount(ticket.getString("textField_kxjohveg"));
-                customerTicket.setBank(ticket.getString("textField_kxjohveh"));
-                CustomerTicketService.insert(customerTicket);
-            });
+            WarehouseEntity warehouse = new WarehouseEntity();
+            warehouse.setName(data.getString("textField_kxo1r6fp"));
+            warehouse.setProductNumber(data.getString("textField_kxiy5wcy"));
+            warehouse.setProductName(data.getString("textField_kxiy5wcz"));
+            warehouse.setSpec(data.getString("textField_kxiy5wd0"));
+            warehouse.setTypeName(data.getString("textField_kxiyn2f4"));
+            warehouse.setUnit(data.getString("textField_kxiyn2f5"));
+            warehouse.setSupplierName(data.getString("textField_kxo22g08"));
+            warehouse.setAmount(data.getBigDecimal("numberField_kxo2hqtd"));
+            warehouseService.insert(warehouse);
         });
     }
 }

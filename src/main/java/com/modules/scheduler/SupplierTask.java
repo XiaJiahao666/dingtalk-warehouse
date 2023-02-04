@@ -39,9 +39,9 @@ public class SupplierTask {
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void run() {
-        log.info("客户更新任务start");
+        log.info("供应商同步任务start");
         this.run(new HashMap<>(0));
-        log.info("客户更新任务end");
+        log.info("供应商同步任务end");
     }
 
     public void run(Map<String, Object> params) {

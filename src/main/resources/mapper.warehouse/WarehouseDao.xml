@@ -9,7 +9,7 @@
         <result property="productNumber" column="product_number"/>
         <result property="productName" column="product_name"/>
         <result property="spec" column="spec"/>
-        <result property="type" column="type"/>
+        <result property="typeName" column="type_name"/>
         <result property="unit" column="unit"/>
         <result property="supplierName" column="supplier_name"/>
         <result property="amount" column="amount"/>

@@ -17,11 +17,6 @@ public class SupplierServiceImpl implements SupplierService {
     private SupplierDao supplierDao;
 
     @Override
-    public List<SupplierEntity> selectList() {
-        return supplierDao.selectList(new QueryWrapper<>());
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public void insert(SupplierEntity supplier) {
         supplierDao.insert(supplier);

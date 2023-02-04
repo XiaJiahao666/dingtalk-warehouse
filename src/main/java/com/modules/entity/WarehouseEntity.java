@@ -40,7 +40,7 @@ public class WarehouseEntity {
     /**
      * 分类名称
      */
-    private String type;
+    private String typeName;
 
     /**
      * 单位名称
@@ -55,7 +55,7 @@ public class WarehouseEntity {
     /**
      * 库存数量
      */
-    private BigDecimal anount;
+    private BigDecimal amount;
 
     /**
      * 逻辑删除标志 1.删除
