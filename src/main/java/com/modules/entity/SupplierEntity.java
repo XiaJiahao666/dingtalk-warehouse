@@ -1,12 +1,13 @@
 package com.modules.entity;
 
-import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @TableName(value = "rz_supplier", autoResultMap = true)
@@ -44,7 +45,7 @@ public class SupplierEntity {
      * 开户资料
      */
     @TableField(typeHandler = FastjsonTypeHandler.class)
-    private JSONArray attachment;
+    private List<String> attachment;
 
     /**
      * 备注

@@ -1,5 +1,6 @@
 package com.modules.scheduler;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.client.DingTalkYiDaClient;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -130,9 +133,25 @@ public class SupplierTask {
             supplier.setStatus(data.getString("radioField_kxnztyz0"));
             supplier.setAddress(data.getString("addressField_kxnztyz1_id"));
             supplier.setContactName(data.getString("textField_kxnztyz3"));
-            supplier.setAttachment(data.getJSONArray("attachmentField_kxnztyz4"));
+            List<JSONObject> attachmentList = data.getJSONArray("attachmentField_kxnztyz4").toJavaList(JSONObject.class);
+            List<String> attachmentUrlList = new ArrayList<>();
+            attachmentList.forEach(attachment -> {
+                String res = this.getAttachmentUrl(this.managerUserId, attachmentList.get(0));
+                attachmentUrlList.add(res);
+            });
+            supplier.setAttachment(attachmentUrlList);
             supplier.setRemarks(data.getString("textareaField_kxo1mnc0"));
             supplierService.insert(supplier);
         });
+    }
+
+    /**
+     * 附件处理，获取临时免登附件地址
+     */
+    private String getAttachmentUrl(String dingUserId, JSONObject yiDaAttachment) {
+        String responseBody = yiDaClient.temporaryUrls(dingUserId, URLEncoder.encode("https://www.aliwork.com" + yiDaAttachment.getString("downloadUrl"), StandardCharsets.UTF_8));
+        log.info("yiDaResponseBody: {}", responseBody);
+        JSONObject responseObj = JSON.parseObject(responseBody);
+        return responseObj.getString("result");
     }
 }
