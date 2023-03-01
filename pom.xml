@@ -17,7 +17,7 @@
 
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
         <dingtalk-warehouse.version>1.0.0</dingtalk-warehouse.version>
     </properties>
 
@@ -66,4 +66,13 @@
             <version>5.7.22</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>
